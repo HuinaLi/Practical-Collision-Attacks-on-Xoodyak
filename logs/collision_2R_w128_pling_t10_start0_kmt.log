@@ -1,0 +1,10 @@
+we have arrived here
+#Round: 2, #as =: 128, START:
+New DC Verify Model Constructed:) var_num:3457, clause_num:20352
+Solve START: no.1
+solve cost: 966.409037 s
+Find!
+Check: 
+F
+check cost: 1.144995 s
+__________End____________
