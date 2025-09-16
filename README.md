@@ -6,13 +6,13 @@ The source codes and results are used to help verify the results in our paper.
 
 ## Xoodoo Collision Analysis Tool Project Overview
 
-This project is a specialized toolset for analyzing collision attacks on the Xoodoo cryptographic algorithm. Xoodoo is a 384-bit permutation function used in cryptographic hash functions and eXtendable Output Functions (XOF). This project implements differential trail search and collision pair search functionality for the Xoodoo algorithm.
+This project is a specialized toolset for analyzing collision attacks on the Xoodoo. Xoodoo is a 384-bit permutation  used in cryptographic hash functions and eXtendable Output Functions (XOF). This project implements differential trail search and collision pair search functionality for the Xoodoo algorithm.
 
 ## Main Features
 
 ### 1. Differential Trail Search
 - **Location**: `trail_search/`
-- **Function**: Search for differential trails in the Xoodoo algorithm, finding collision trails with specific numbers of active S-boxes
+- **Function**: Search for round-reduced Xoodoo differential trails, finding collision trails with specific numbers of active S-boxes
 - **Features**:
   - Supports 2-4 round Xoodoo differential trail search
   - Uses SAT solvers for constraint solving
