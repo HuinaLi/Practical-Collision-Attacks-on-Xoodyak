@@ -57,10 +57,10 @@ xoodoo_collision/
 ### Xoodoo Round Function
 The Xoodoo algorithm consists of the following operations:
 1. **θ (theta)**: Linear diffusion layer
-2. **ρ_west (rhowest)**: West rotation
+2. **ρ_west (rhowest)**: Plane shift rotation
 3. **ι (addConst)**: Add round constants
 4. **χ (chi)**: Non-linear S-box layer
-5. **ρ_east (rhoeast)**: East rotation
+5. **ρ_east (rhoeast)**: Plane shift rotation
 
 ### Differential Trail Search Algorithm
 1. Build CNF constraint models including:
