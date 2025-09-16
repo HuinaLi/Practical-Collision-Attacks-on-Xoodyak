@@ -2,9 +2,7 @@
 The source codes and results are used to help verify the results in our paper.
 
 
-# Xoodoo Collision Analysis Tool
-
-## 项目概述
+## Xoodoo Collision Analysis Tool项目概述
 
 本项目是一个专门用于分析Xoodoo密码算法碰撞攻击的工具集。Xoodoo是一个384位的置换函数，应用于密码学哈希函数和可扩展输出函数(XOF)中。本项目实现了对Xoodoo算法的差分路径搜索和碰撞对搜素功能。
 
