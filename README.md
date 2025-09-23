@@ -1,8 +1,9 @@
 # SAC25-Practical-Collision-Attacks-on-Reduced-Round-Xoodyak-Hash-Mode
 The source codes and results are used to help verify the results in our paper.
-
-
-
+All experiments are conducted on a server with Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz 26 Cores, 125G RAM, and CentOS Linux 7. 
+-SageMath version 10.2
+-Python 3.10.14
+-treengeling 1.0.0
 
 ## Xoodoo Collision Analysis Tool Project Overview
 
