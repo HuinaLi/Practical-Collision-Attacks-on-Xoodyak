@@ -119,8 +119,10 @@ if __name__ == '__main__':
     args = parse.parse_args()
 
    ############# dc ############## 
-    file_path = '/home/user/lhn/xoodoo_collision/trail_search/3rtrail/cons/R3_S64_M0_E64.log'
-    diff_bit_lists = read_dcsol_ls(file_path,args.rounds)
+    diff_list = [0 for _ in range(384)]
+    for i in range(32):
+        diff_list[i] = 1
+    
     Value_in = read_sol_ls(args.spath)
-    according_valid_dc_generate_message_pair(Value_in, args.rounds,args.stratrnd, diff_bit_lists[0],diff_bit_lists[4*args.stratrnd], diff_bit_lists[-1])
+    according_valid_dc_generate_message_pair(Value_in, args.rounds,args.stratrnd, diff_list, diff_list)
     

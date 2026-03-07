@@ -9,9 +9,9 @@ import re
 
 ######### path information ##############
 keypath = [
-    "/home/user/lhn/xoodoo_collision/rightpair_search/code/print_right_pair.py",
-    "/home/user/lhn/xoodoo_collision/rightpair_search/result",
-    "/home/user/lhn/xoodoo_collision/rightpair_search/code/ban_solution.py"
+    "/home/hnli/xoodyak-collision/code/print_right_pair.py",
+    "/home/hnli/xoodyak-collision/result",
+    "/home/hnli/xoodyak-collision/code/ban_solution.py"
     ]
 
 
@@ -19,8 +19,8 @@ def run_satsolver(solver, nrThread, filename1, filename2,timeout_seconds = 10000
     """Run solver and log output to filename2."""
     try:
         with open(filename2, "w") as f:
-            result = subprocess.run([solver, "-t", str(nrThread),  filename1], stdout=f, stderr=subprocess.STDOUT, check=True, timeout=timeout_seconds)
-            # result = subprocess.run([solver,   filename1], stdout=f, stderr=subprocess.STDOUT, check=True, timeout=timeout_seconds)
+            # result = subprocess.run([solver, "-t", str(nrThread),  filename1], stdout=f, stderr=subprocess.STDOUT, check=True, timeout=timeout_seconds)
+            result = subprocess.run([solver,   filename1], stdout=f, stderr=subprocess.STDOUT, check=True, timeout=timeout_seconds)
     
     except subprocess.TimeoutExpired:
         print(f"The solver was terminated after {timeout_seconds} seconds due to timeout.")
@@ -153,11 +153,12 @@ if __name__ == "__main__":
     Diff = [0 for r in range(4*args.rounds)]
    ############# SFS ############## 
     print("we have arrived here")
-    file_path = '/home/user/lhn/xoodoo_collision/trail_search/3rtrail/cons/R3_S64_M0_E64.log'
-    
-    diff_bit_lists = read_dcsol_ls(file_path,args.rounds)
-    Diff_list = diff_bit_lists[4*args.stratrnd:]
+    diff_list = [0 for _ in range(384)]
+    for i in range(32):
+        diff_list[i] = 1
+    Diff_list = [diff_list for r in range(4*args.rounds)]
     print(len(Diff_list))
+    
     solve(args.rounds, 
           args.weight, 
           args.path, 

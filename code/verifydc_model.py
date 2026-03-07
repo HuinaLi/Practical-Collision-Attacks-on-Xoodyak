@@ -37,11 +37,11 @@ def check_dc_validity_newmodel(ROUNDS,Weight,start_rnd,Path,diff,state=384,rate=
     #3r: numvars A0--theta-->B0--pw-->C0--s-->D0--pe-->A1--theta-->B1--pw-->C1--s-->D1--pe-->A2--theta-->B2--pw-->C2--s-->D2
     ### Initialization ###### 10000000
     Q = set()
-    for i in range(128,state):
-        if i in [128, 376]:
-            Q.add(a_vars[0][i] +1)
-        else:
-            Q.add(a_vars[0][i])
+    # for i in range(128,state):
+    #     if i in [128, 376]:
+    #         Q.add(a_vars[0][i] +1)
+    #     else:
+    #         Q.add(a_vars[0][i])
     ###########Adding the Constraints of Difference and Value ##################
     for r in range(ROUNDS):
         a_vars[r] = theta(a_vars[r])
@@ -142,4 +142,4 @@ if __name__ == '__main__':
     parse.add_argument("-m", "--stratrnd", type=int, help="start_rnd")
     args = parse.parse_args()
 
-    check_dc_validity_newmodel(args.rounds, args.weight,args.stratrnd, args.path)
+    # check_dc_validity_newmodel(args.rounds, args.weight,args.stratrnd, args.path)
