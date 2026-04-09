@@ -1,0 +1,8 @@
+we have arrived here
+16
+#Round: 4, #as =: 256, START:
+New DC Verify Model Constructed:) var_num:7681, clause_num:61440
+Solve START: no.1
+SAT solver failed with exit code -9.
+SAT solver command failed for /home/hnli/xoodyak-collision/cons/4round_w256.cnf
+__________End____________

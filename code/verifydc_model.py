@@ -22,10 +22,10 @@ cnf_sbox =  [
     [5, -1, -4, -6]
  ]
 def generate_filename(Path, ROUNDS,Weight):
-    # 初始化文件名的前缀部分
-    filename = f"{Path}/{ROUNDS}round_w{Weight}"
-    
-    return filename
+    # Support both directory path and explicit .cnf file path.
+    if Path.endswith(".cnf"):
+        return Path[:-4]
+    return f"{Path}/{ROUNDS}round_w{Weight}"
 
 def check_dc_validity_newmodel(ROUNDS,Weight,start_rnd,Path,diff,state=384,rate=32):
     R = declare_ring( [Block( 'X', 4*ROUNDS*state),'u' ], globals() )
@@ -48,13 +48,13 @@ def check_dc_validity_newmodel(ROUNDS,Weight,start_rnd,Path,diff,state=384,rate=
         for i in range(state):
             Q.add(b_vars[r][i] + a_vars[r][i])
 
-        b_vars[r] = rhowest(b_vars[r])
-        b_vars[r] = addConst(b_vars[r],start_rnd+r)
+        b_vars[r] = rho_west(b_vars[r])
+        b_vars[r] = add_const(b_vars[r],start_rnd+r)
         for i in range(state):
             Q.add(c_vars[r][i] + b_vars[r][i])
 
         if r < ROUNDS-1:
-            d_vars[r] = rhoeast(d_vars[r]) 
+            d_vars[r] = rho_east(d_vars[r]) 
             for i in range(state): 
                 Q.add(a_vars[r+1][i] + d_vars[r][i])
 
@@ -142,4 +142,12 @@ if __name__ == '__main__':
     parse.add_argument("-m", "--stratrnd", type=int, help="start_rnd")
     args = parse.parse_args()
 
-    # check_dc_validity_newmodel(args.rounds, args.weight,args.stratrnd, args.path)
+    # diff_list = [0 for _ in range(384)]
+    # for i in range(32):
+    #     diff_list[i] = 1
+    # Diff_list = [diff_list for r in range(4*args.rounds)]
+    # print("we have arrived here")
+    # print(len(Diff_list))
+    # print(f"#Round: {args.rounds}, #as =: {args.weight}, START:")
+
+    # check_dc_validity_newmodel(args.rounds, args.weight,args.stratrnd, args.path, Diff_list)

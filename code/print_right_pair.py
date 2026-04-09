@@ -63,12 +63,12 @@ def according_valid_dc_generate_message_pair(Value_in,ROUNDS,strat_rnd,diff_star
         # theta
         Value_in = theta(Value_in)
         Value_out = theta(Value_out)
-        # rhowest
-        Value_in = rhowest(Value_in)
-        Value_out = rhowest(Value_out)
+        # rho_west
+        Value_in = rho_west(Value_in)
+        Value_out = rho_west(Value_out)
         # add const
-        Value_in = addConst(Value_in,r+strat_rnd)
-        Value_out = addConst(Value_out,r+strat_rnd)
+        Value_in = add_const(Value_in,r+strat_rnd)
+        Value_out = add_const(Value_out,r+strat_rnd)
         # non-linear layer
         Value_in = chi(Value_in)
         Value_out = chi(Value_out)
@@ -86,9 +86,9 @@ def according_valid_dc_generate_message_pair(Value_in,ROUNDS,strat_rnd,diff_star
         print_Xstate(Value_out)
         # linear layer
         if r < ROUNDS-1:
-            # rhoeast
-            Value_in = rhoeast(Value_in)
-            Value_out = rhoeast(Value_out)
+            # rho_east
+            Value_in = rho_east(Value_in)
+            Value_out = rho_east(Value_out)
             # compute difference
             diff = [Value_in[i] +Value_out[i] for i in range(state)]
             print("##############################################")

@@ -1,0 +1,11 @@
+we have arrived here
+12
+#Round: 3, #as =: 192, START:
+New DC Verify Model Constructed:) var_num:5761, clause_num:45888
+Solve START: no.1
+solve cost: 9.736500 s
+Find!
+Check: 
+Output has been saved to /home/hnli/xoodyak-collision/result/3round_w192_rightpair_no1.log
+check cost: 1.087854 s
+__________End____________
