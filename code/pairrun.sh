@@ -20,6 +20,6 @@ run_task() {
 }
 
 # 启动任务
-run_task 4 256 0 0 1 & 
+run_task 3 192 12 0 1 & 
 
 wait
