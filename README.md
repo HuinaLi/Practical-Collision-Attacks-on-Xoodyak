@@ -111,7 +111,7 @@ python /home/hnli/xoodyak-collision/code/solve_rightpair.py \
   -r 3 \
   -w 192 \
   -m 0 \
-  -satTrd 0 \
+  -satTrd 12 \
   -f /home/hnli/xoodyak-collision/cons \
   -sat /home/hnli/sat-solvers/cadical/build/cadical
 ```
@@ -131,9 +131,9 @@ python /home/hnli/xoodyak-collision/code/solve_rightpair.py \
   -r 3 \
   -w 192 \
   -m 0 \
-  -satTrd 0 \
+  -satTrd 12 \
   -f /home/hnli/xoodyak-collision/cons \
-  -sat /home/hnli/sat-solvers/cadical/build/cadical
+  -sat /home/hnli/sat-solvers/cadical/build/cadical 
 ```
 
 A reference log is available at:
