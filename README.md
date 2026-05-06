@@ -1,4 +1,4 @@
-# SAC25 Practical Collision Attacks on Reduced-Round Xoodyak (Hash Mode)
+# SAC25 Practical Collision Attacks on Reduced-Round Xoodyak Hash Mode
 
 This repository contains source code and experiment outputs used to verify the results in our paper.
 
