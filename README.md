@@ -4,8 +4,6 @@ This repository contains source code and experiment outputs used to verify the r
 
 ## Environment
 
-Experiments were run on a server with Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz, 26 cores, 125G RAM, and CentOS Linux 7.
-
 - SageMath 10.2
 - Python 3.10.14
 - treengeling 1.0.0
