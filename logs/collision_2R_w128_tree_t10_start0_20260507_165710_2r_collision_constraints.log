@@ -1,0 +1,20 @@
+we have arrived here
+8
+#Round: 2, #as =: 128, START:
+Attack type: collision
+Collision init mode: constraints
+Run ID: 20260507_165710_2r_collision_constraints
+New DC Verify Model Constructed:) var_num:3841, clause_num:30592
+CNF has been saved to cons/collision_2round_w128_20260507_165710_2r_collision_constraints.cnf
+Solve START: no.1
+SAT solver type: parallel
+SAT solver command: /home/hnli/sat-solvers/lingeling/treengeling -t 10 cons/collision_2round_w128_20260507_165710_2r_collision_constraints.cnf
+solve cost: 2778.885413 s
+Find!
+Check: 
+Output has been saved to /home/hnli/xoodyak-collision/result/collision_2round_w128_20260507_165710_2r_collision_constraints_rightpair_no1.log
+check cost: 2.709838 s
+__________End____________
+real 2785.68
+user 26360.11
+sys 167.84

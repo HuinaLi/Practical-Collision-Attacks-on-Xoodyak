@@ -1,0 +1,15 @@
+we have arrived here
+12
+#Round: 3, #as =: 192, START:
+Attack type: sfscollision
+Run ID: 20260507_133711_3r_sfscollision
+New DC Verify Model Constructed:) var_num:5761, clause_num:45888
+CNF has been saved to cons/sfscollision_3round_w192_20260507_133711_3r_sfscollision.cnf
+Solve START: no.1
+SAT solver command: /home/hnli/sat-solvers/lingeling/treengeling -t 10 cons/sfscollision_3round_w192_20260507_133711_3r_sfscollision.cnf
+solve cost: 115.958858 s
+Find!
+Check: 
+Output has been saved to /home/hnli/xoodyak-collision/result/sfscollision_3round_w192_20260507_133711_3r_sfscollision_rightpair_no1.log
+check cost: 2.912123 s
+__________End____________

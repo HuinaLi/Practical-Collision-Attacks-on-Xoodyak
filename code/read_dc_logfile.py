@@ -2,11 +2,12 @@ import math
 from xooroundf import *
 import argparse
 
+
 """read solution from solution file"""
 def read_dcsol_ls(sol_path: str, Round: int, solution_sign="s SATISFIABLE", line_split="v", state_x=4, state_y=3, state_z=32, state=384) -> list:
     # var number of A,B,NK
     # var_num = 4*Round*state - state +  state_x*(Round-1)*state_z
-    var_num = 4*Round*state - state +  state_x*(Round-1)*state_z
+    var_num = 4*Round*state - state + state_x*(Round-1)*state_z
     # extract the solution from cnf solution file
     with open(sol_path, "r") as f:
         contents = f.read()
@@ -32,36 +33,27 @@ def read_dcsol_ls(sol_path: str, Round: int, solution_sign="s SATISFIABLE", line
     C = []
     D = []
     Diff = []
-    
+
     for r in range(Round):
-        A.append(sol[r*state : (r+1)*state])
+        A.append(sol[r*state: (r+1)*state])
         Diff.append(A[r])
-        B.append(sol[Round*state + r*state : Round*state + (r+1)*state])
+        B.append(sol[Round*state + r*state: Round*state + (r+1)*state])
         Diff.append(B[r])
-        C.append(sol[2*Round*state + r*state : 2*Round*state + (r+1)*state])
+        C.append(sol[2*Round*state + r*state: 2*Round*state + (r+1)*state])
         Diff.append(C[r])
         if r < Round - 1:
-            D.append(sol[3*Round*state + r*state : 3*Round*state + (r+1)*state])
+            D.append(sol[3*Round*state + r*state: 3*Round*state + (r+1)*state])
             Diff.append(D[r])
     tmp = C[Round-1][:128] + list([0 for _ in range(256)])
     Diff.append(tmp)
     return Diff
 
 
-
 if __name__ == '__main__':
-    parse = argparse.ArgumentParser(description="run solve")
-    parse.add_argument("-r", "--rounds", type=int, help="number of rounds")
+    parse = argparse.ArgumentParser(description="Read a SAT solver log and print decoded DC list length.")
+    parse.add_argument("-r", "--rounds", type=int, required=True, help="number of rounds")
+    parse.add_argument("-s", "--spath", type=str, required=True, help="SAT solver solution/log file path")
     args = parse.parse_args()
-    # print(patterns)
-    # 文件路径
-    file_path = '/home/user/lhn/xoodoo_collision/trail_search/3rtrail/cons/R3_S10_M60_E54.log'
-    
-    diff_bit_lists = read_dcsol_ls(file_path, args.rounds)
-    
+
+    diff_bit_lists = read_dcsol_ls(args.spath, args.rounds)
     print(len(diff_bit_lists))
-
-    
-
-
-    

@@ -12,8 +12,8 @@ Experiments were run on a server with Intel(R) Xeon(R) Gold 6230R CPU @ 2.10GHz,
 
 ### Environment Setup (Required Before Running)
 
-1. Install Sage via conda following the official guide:  
-   [SageMath conda installation](https://doc.sagemath.org/html/en/installation/conda.html)
+1. Install Sage via conda following the official guide:
+  [SageMath conda installation](https://doc.sagemath.org/html/en/installation/conda.html)
 2. Restart terminal after conda installation.
 3. Create and activate an environment (example name: `sage`):
 
@@ -29,16 +29,22 @@ mamba create -n sage sage python=3.10
 mamba activate sage
 ```
 
-4. Install PySAT:
+1. Install PySAT:
 
 ```bash
 pip install "python-sat[aiger,approxmc,cryptosat,pblib]"
 python -c "import pysat; print('pysat installed successfully')"
 ```
 
-5. Install SAT solvers:
-   - Lingeling family: [https://github.com/arminbiere/lingeling](https://github.com/arminbiere/lingeling)
-   - CaDiCaL: [https://github.com/arminbiere/cadical](https://github.com/arminbiere/cadical)
+1. Install SAT solvers:
+  - Lingeling family: [https://github.com/arminbiere/lingeling](https://github.com/arminbiere/lingeling)
+  - CaDiCaL: [https://github.com/arminbiere/cadical](https://github.com/arminbiere/cadical)
+
+Set the solver path once per shell session if the binary is not on `PATH`:
+
+```bash
+export SAT_SOLVER=/path/to/treengeling
+```
 
 ## Overview
 
@@ -79,21 +85,33 @@ Implemented in `code/xooroundf.py`:
 
 ## Usage
 
-### 1) Activate Sage Environment
+Run commands from the repository root after activating the Sage environment:
 
 ```bash
+cd /path/to/xoodyak-collision
 conda activate sage
+export SAT_SOLVER=/path/to/treengeling
 ```
 
-### 2) Build Verification Model Only
+Generated CNF, solver log, run log, and right-pair output filenames include a run timestamp in `YYYYmmdd_HHMMSS` format.
+
+Collision runs support two initialization modes:
+
+- `constraints`: add traditional unit constraints with `Q.add(a_vars[0][i] + 1)` or `Q.add(a_vars[0][i])`.
+- `substitution`: substitute constants during model construction with `a_vars[0][i] = ring(1)` or `ring(0)`.
+
+### 1) Build Verification Model Only
 
 ```bash
-python /home/hnli/xoodyak-collision/code/verifydc_model.py \
+python code/verifydc_model.py \
   -r 3 \
-  -f /home/hnli/xoodyak-collision/cons/test.cnf \
+  -f cons \
   -w 192 \
-  -m 0
+  -m 0 \
+  --sfscollision
 ```
+
+Use `--collision` instead of `--sfscollision` to include the extra initialization constraints. Collision mode defaults to `--collision-init-mode constraints`; use `--collision-init-mode substitution` to substitute initialization constants during model construction.
 
 Expected output prefix:
 
@@ -102,43 +120,72 @@ we have arrived here
 12
 #Round: 3, #as =: 192, START:
 New DC Verify Model Constructed:) var_num:5761, clause_num:45888
+CNF has been saved to cons/sfscollision_3round_w192_YYYYmmdd_HHMMSS.cnf
 ```
 
-### 3) Full Right-Pair Search Pipeline
+### 2) Full Right-Pair Search Pipeline
 
 ```bash
-python /home/hnli/xoodyak-collision/code/solve_rightpair.py \
+python code/solve_rightpair.py \
   -r 3 \
   -w 192 \
   -m 0 \
   -satTrd 12 \
-  -f /home/hnli/xoodyak-collision/cons \
-  -sat /home/hnli/sat-solvers/cadical/build/cadical
+  -f cons \
+  -sat "$SAT_SOLVER" \
+  --sfscollision
 ```
 
-### 4) Batch Run
+For the collision variant:
 
 ```bash
-bash /home/hnli/xoodyak-collision/code/pairrun.sh
+python code/solve_rightpair.py \
+  -r 2 \
+  -w 128 \
+  -m 0 \
+  -satTrd 10 \
+  -f cons \
+  -sat "$SAT_SOLVER" \
+  --collision \
+  --collision-init-mode constraints
 ```
+
+For the substitution-based collision initialization:
+
+```bash
+python code/solve_rightpair.py \
+  -r 2 \
+  -w 128 \
+  -m 0 \
+  -satTrd 10 \
+  -f cons \
+  -sat "$SAT_SOLVER" \
+  --collision \
+  --collision-init-mode substitution
+```
+
+### 3) Batch Run
+
+```bash
+SAT_SOLVER="$SAT_SOLVER" SAT_SOLVER_TYPE=auto ATTACK_TYPE=sfscollision bash code/pairrun.sh
+```
+
+Set `ATTACK_TYPE=collision` for the collision initialization constraints. Set `PYTHON_BIN=/path/to/python` if the activated environment's Python is not the first Python 3 executable on `PATH`.
 
 ## Minimal Reproducible Example (3R, w=192)
 
-Run the following commands in order:
+Run the following command from the repository root:
 
 ```bash
-python /home/hnli/xoodyak-collision/code/solve_rightpair.py \
+python code/solve_rightpair.py \
   -r 3 \
   -w 192 \
   -m 0 \
   -satTrd 12 \
-  -f /home/hnli/xoodyak-collision/cons \
-  -sat /home/hnli/sat-solvers/cadical/build/cadical 
+  -f cons \
+  -sat "$SAT_SOLVER" \
+  --sfscollision
 ```
-
-A reference log is available at:
-
-`/home/hnli/xoodyak-collision/logs/SFScollision_3_w192_cad_t0_start0_kmt.log`
 
 Reference output:
 
@@ -146,12 +193,15 @@ Reference output:
 we have arrived here
 12
 #Round: 3, #as =: 192, START:
+Attack type: sfscollision
+Run ID: YYYYmmdd_HHMMSS
 New DC Verify Model Constructed:) var_num:5761, clause_num:45888
+CNF has been saved to cons/sfscollision_3round_w192_YYYYmmdd_HHMMSS.cnf
 Solve START: no.1
 solve cost: 9.736500 s
 Find!
 Check:
-Output has been saved to /home/hnli/xoodyak-collision/result/3round_w192_rightpair_no1.log
+Output has been saved to result/sfscollision_3round_w192_YYYYmmdd_HHMMSS_rightpair_no1.log
 check cost: 1.087854 s
 __________End____________
 ```
@@ -163,14 +213,49 @@ Note: timing values (for example `solve cost` and `check cost`) may vary across 
 - `-r, --rounds`: number of rounds
 - `-w, --weight`: target weight (active S-box count setting)
 - `-m, --stratrnd`: start round index
-- `-f, --path`: CNF output path or output directory
-- `-satTrd, --thread`: SAT solver thread option
-- `-sat, --solver`: SAT solver executable path
+- `-f, --path`: CNF output path or output directory; defaults to `cons` in `solve_rightpair.py`
+- `-satTrd, --thread`: thread count for parallel solvers (`treengeling`/`plingeling`); ignored for sequential solvers (`cadical`/`kissat`)
+- `-sat, --solver`: SAT solver executable path; defaults to `SAT_SOLVER`, `/home/hnli/sat-solvers/lingeling/treengeling`, or `treengeling` on `PATH`
+- `--solver-type`: `auto`, `parallel`, or `sequential`; auto treats `treengeling`/`plingeling` as parallel and `cadical`/`kissat` as sequential
+- `--sfscollision`: default attack type; does not add initialization constraints
+- `--collision`: adds the initialization constraints in `verifydc_model.py`
+- `--collision-init-mode`: collision initialization mode; `constraints` keeps variables and adds unit constraints, while `substitution` replaces initialized state bits with constants before CNF generation
+- `--run-id`: optional timestamp/run id override for reproducible filenames
+
+## Collision Initialization Comparison
+
+The following measurements compare the two collision initialization modes for `2R collision w128` with `start_rnd=0`, Treengeling, and `-satTrd 10` on the server described above. Both runs found a SAT assignment and generated a right-pair output.
+
+### SAT Instance Size
+
+| Metric | `constraints` | `substitution` | Change |
+|---|---:|---:|---:|
+| CNF variables | 3841 | 3457 | -384 |
+| Clauses after one solution ban | 30593 | 20353 | -10240 |
+| CNF file size | 726633 bytes | 455581 bytes | -37.3% |
+| Common clauses | 5138 | 5138 | shared core |
+| Mode-only clauses | 25455 | 15215 | different encodings |
+
+### Runtime
+
+| Metric | `constraints` | `substitution` | Change |
+|---|---:|---:|---:|
+| Solve cost | 2778.885 s | 76.202 s | 36.5x faster |
+| Real time | 2785.68 s | 82.59 s | 33.7x faster |
+| Process time | 26488.33 s | 692.46 s | 38.3x lower |
+| Treengeling rounds | 111 | 36 | -67.6% |
+| Nodes | 3840 | 1140 | -70.3% |
+| Conflicts | 265665047 | 4513300 | -98.3% |
+| Decisions | 285285522 | 5964232 | -97.9% |
+| Propagations | 12634040660 | 226789814 | -98.2% |
+
+In this experiment, `substitution` is much faster because fixed initialization bits are propagated during ANF/CNF construction instead of being left as variables constrained by unit clauses. This shrinks the SAT instance and substantially reduces the solver search space.
 
 ## Notes
 
 - `code/__pycache__/` is generated cache and should not be tracked.
 - Prefer running all scripts inside the `sage` conda environment.
+- Avoid hard-coded absolute project paths; scripts derive paths from their own location or CLI arguments.
 
 ## Author
 
