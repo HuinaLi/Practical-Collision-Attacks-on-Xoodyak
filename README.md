@@ -97,8 +97,8 @@ Generated CNF, solver log, run log, and right-pair output filenames include a ru
 
 Collision runs support two initialization modes:
 
-- `constraints`: add traditional unit constraints with `Q.add(a_vars[0][i] + 1)` or `Q.add(a_vars[0][i])`.
-- `substitution`: substitute constants during model construction with `a_vars[0][i] = ring(1)` or `ring(0)`.
+- `constraints`: add traditional unit constraints with `{Q.add(a_vars[0][i] + 1)}` or `{Q.add(a_vars[0][i])}`.
+- `substitution`: substitute constants during model construction with `{Q.add(a_vars[0][i] + 1) and a_vars[0][i] = ring(1)}` or `{Q.add(a_vars[0][i]) and a_vars[0][i] = ring(0)}`.
 
 ### 1) Build Verification Model Only
 
