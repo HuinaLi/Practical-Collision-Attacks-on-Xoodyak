@@ -220,34 +220,6 @@ Note: timing values (for example `solve cost` and `check cost`) may vary across 
 - `--collision-init-mode`: collision initialization mode; `constraints` keeps variables and adds unit constraints, while `substitution` replaces initialized state bits with constants before CNF generation
 - `--run-id`: optional timestamp/run id override for reproducible filenames
 
-## Collision Initialization Comparison
-
-The following measurements compare the two collision initialization modes for `2R collision w128` with `start_rnd=0`, Treengeling, and `-satTrd 10` on the server described above. Both runs found a SAT assignment and generated a right-pair output.
-
-### SAT Instance Size
-
-| Metric | `constraints` | `substitution` | Change |
-|---|---:|---:|---:|
-| CNF variables | 3841 | 3457 | -384 |
-| Clauses after one solution ban | 30593 | 20353 | -10240 |
-| CNF file size | 726633 bytes | 455581 bytes | -37.3% |
-| Common clauses | 5138 | 5138 | shared core |
-| Mode-only clauses | 25455 | 15215 | different encodings |
-
-### Runtime
-
-| Metric | `constraints` | `substitution` | Change |
-|---|---:|---:|---:|
-| Solve cost | 2778.885 s | 76.202 s | 36.5x faster |
-| Real time | 2785.68 s | 82.59 s | 33.7x faster |
-| Process time | 26488.33 s | 692.46 s | 38.3x lower |
-| Treengeling rounds | 111 | 36 | -67.6% |
-| Nodes | 3840 | 1140 | -70.3% |
-| Conflicts | 265665047 | 4513300 | -98.3% |
-| Decisions | 285285522 | 5964232 | -97.9% |
-| Propagations | 12634040660 | 226789814 | -98.2% |
-
-In this experiment, `substitution` is much faster because fixed initialization bits are propagated during ANF/CNF construction instead of being left as variables constrained by unit clauses. This shrinks the SAT instance and substantially reduces the solver search space.
 
 ## Notes
 
