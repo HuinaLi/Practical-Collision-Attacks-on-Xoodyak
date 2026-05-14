@@ -2,14 +2,7 @@ we have arrived here
 12
 #Round: 3, #as =: 192, START:
 Attack type: sfscollision
-Constraint application mode: anf-assert
-Extra constraints requested: 0
-SFS diff-value active propagation: False
 Run ID: 20260514_125053_sfscollision_3r_w192_original_solver_compare_pling_t10
-Constraint application mode: anf-assert
-Extra constraints added: 0
-Extra constraint sources: none
-Difference-value propagated constraints: none
 New DC Verify Model Constructed:) var_num:5761, clause_num:45888
 CNF has been saved to cons/sfscollision_3round_w192_20260514_125053_sfscollision_3r_w192_original_solver_compare_pling_t10.cnf
 Solve START: no.1
