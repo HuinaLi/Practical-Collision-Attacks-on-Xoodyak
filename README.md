@@ -254,6 +254,7 @@ In this experiment, `substitution` is much faster because fixed initialization b
 - `code/__pycache__/` is generated cache and should not be tracked.
 - Prefer running all scripts inside the `sage` conda environment.
 - Avoid hard-coded absolute project paths; scripts derive paths from their own location or CLI arguments.
+- The runtimes of SAT instances are sensitive to the execution environment; however, the discrepancies are not substantial
 
 ## Author
 
